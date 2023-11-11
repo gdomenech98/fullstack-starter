@@ -1,0 +1,16 @@
+{
+    "name": "@sixedge/libs",
+    "version": "1.0.0",
+    "main": "index.ts",
+    "dependencies": {
+        "bcrypt": "~5.1.1",
+        "cookie": "0.5.0",
+        "jsonwebtoken": "~9.0.2",
+        "mongodb": "~6.1.0",
+        "zod": "~3.22.4"
+    },
+    "devDependencies": {
+        "@types/node": "~20.7.2",
+        "typescript": "~5.2.2"
+    }
+}

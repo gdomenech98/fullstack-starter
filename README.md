@@ -103,3 +103,31 @@ If after pushing to GitHub you're seeing that your automatic vercel deployment f
 Error: Command "yarn set version stable && yarn install" exited with 1
 ```
 Run `yarn vercel:install` locally and then commit and push the changes to GitHub.
+
+
+# FullStack Workspace
+
+This is a full-stack project that enables fast infrastructure deployment for developing projects with both backend and frontend components. It's a monorepo project based on Yarn workspaces, making it easily extensible.
+
+## 🚀 Start project 🚀
+After installation or package installation: 
+```node
+yarn
+```
+- Development: has hot reload and automatically build modules to have a good and fast development cicle
+```node
+yarn start-dev
+```
+- Production: high performance backend and site due to minify and compile project modules, this haven't hot reload.
+```node
+yarn start-prod
+```
+## 👾 Available services (default)👾
+- **api**: **ExpressJS** API handler and NodeJS backend, by default runs at **port 3001**
+- **site**: **NextJS** frontend React web application. By default runs at **port 3000**
+- **proxy**: a reverse proxy to redirect traffic through services using **port 8080**, build using **redbird**
+  ### 🔀 Proxy default routing 🔀
+  [YOUR_URL]/api/*, all requests go to **api** service located at **port 3001**
+  [YOUR_URL]/*, default requests go to **site** service located at **port 3000**
+
+📝 NOTE: Services are configured through *apps/* directory

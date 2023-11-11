@@ -1,23 +1,29 @@
 {
-  "name": "myapp",
+  "name": "fullstack-starter",
+  "repository": "https://github.com/gerarddomenechcobos1998/fullstack-starter.git",
+  "author": "Gerard <gerard.domenech.cobos@gmail.com>",
+  "license": "MIT",
   "private": true,
   "workspaces": [
     "apps/*",
-    "packages/*"
+    "packages/*",
+    "tests"
   ],
   "scripts": {
-    "vercel:install": "yarn set version 3.5 && yarn install",
-    "native": "cd apps/expo && yarn start",
+    "dev": "turbo run dev --parallel",
     "watch": "yarn workspaces foreach -pi run watch",
+    "build": "yarn workspaces foreach --all --exclude next-app run build",
+    "run:tests": "yarn workspace tests run test",
     "web": "yarn build && cd apps/next && yarn next",
     "web:extract": "DISABLE_EXTRACTION=false yarn workspace next-app dev",
     "web:prod": "yarn workspace next-app build",
     "web:prod:serve": "yarn workspace next-app serve",
-    "fix": "manypkg fix",
+    "native": "cd apps/expo && yarn start",
     "postinstall": "yarn check-deps && yarn build",
-    "build": "yarn workspaces foreach --all --exclude next-app run build",
     "upgrade:tamagui": "yarn up '*tamagui*'@latest '@tamagui/*'@latest",
     "upgrade:tamagui:canary": "yarn up '*tamagui*'@canary '@tamagui/*'@canary",
+    "vercel:install": "yarn set version 3.5 && yarn install",
+    "fix": "manypkg fix",
     "check-deps": "check-dependency-version-consistency ."
   },
   "resolutions": {
@@ -32,11 +38,12 @@
     "@babel/runtime": "^7.18.9",
     "@manypkg/cli": "^0.19.1",
     "check-dependency-version-consistency": "^3.0.3",
+    "dotenv": "~16.3.1",
     "eslint": "^8.21.0",
     "node-gyp": "^9.3.1",
     "prettier": "^2.7.1",
     "turbo": "^1.10.3",
-    "typescript": "^4.9.4"
+    "typescript": "~5.2.2"
   },
   "packageManager": "yarn@3.6.3"
 }
