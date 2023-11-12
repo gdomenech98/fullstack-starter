@@ -1,4 +1,4 @@
-1. Jotai store example
+1. Add tamagui basic components (tint, useTint, header)
 2. Models should extend BaseModel, at least UserModel
 3. Test LCRUD with some functions and hooks to modify the result
 // Monday
