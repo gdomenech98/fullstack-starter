@@ -11,8 +11,7 @@ import {
 } from '@my/ui'
 import React, { useEffect, useState } from 'react'
 
-export function TestScreen() {
-
+export function TestScreen(props) {
   return (
     <YStack f={1} jc="center" ai="center" p="$4" space>
       <YStack space="$4" maw={600}>
