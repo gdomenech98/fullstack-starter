@@ -1,4 +1,6 @@
-1. Tamagui (NextJS12)
+2. Restructurar sixedge
+1. Recuperar els imports de /api a mongodb
+2. Recuperar tests a green
 2. Models should extend base model, at least UserModel
 3. Test LCRUD with some functions and hooks to modify the result
 4. Session state amb cookie/barier header

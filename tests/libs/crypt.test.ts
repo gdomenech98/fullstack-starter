@@ -1,4 +1,4 @@
-import { crypt, validate } from '@sixedge/libs'
+import { crypt, validate } from 'sixedge'
 
 describe('Test cryptographic methods', () => {
     test("Test cypher method", async () => {

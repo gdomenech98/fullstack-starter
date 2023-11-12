@@ -1,4 +1,4 @@
-const bcrypt = require('bcrypt');
+import bcrypt from "bcrypt";
 
 export async function validate(password: string, hash: string) {
     const validation = await bcrypt.compare(password, hash);

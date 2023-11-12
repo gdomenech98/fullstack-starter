@@ -1,4 +1,4 @@
-import { Auth } from '@sixedge/libs/src/auth/models/Auth';
+import { Auth } from 'sixedge/src/auth/models/Auth';
 
 describe('Test Auth model', () => {
     describe("Test validateRegister", () => {

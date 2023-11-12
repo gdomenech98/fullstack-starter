@@ -1,4 +1,4 @@
-import { API } from '@sixedge/libs'
+import { API } from 'sixedge'
 
 describe.skip('Test user authentication backend calls', () => { // Skip infra tests, just enabled it for better developing experience
     describe("login", () => {

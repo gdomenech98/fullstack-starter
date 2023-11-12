@@ -3691,9 +3691,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@sixedge/libs@workspace:packages/sixedge":
+"@sixedge/libs@workspace:packages/sixedge(legacy)":
   version: 0.0.0-use.local
-  resolution: "@sixedge/libs@workspace:packages/sixedge"
+  resolution: "@sixedge/libs@workspace:packages/sixedge(legacy)"
   dependencies:
     "@types/node": ~20.7.2
     bcrypt: ~5.1.1
@@ -14211,6 +14211,7 @@ __metadata:
     react-dom: ^18.2.0
     react-native: 0.72.5
     react-native-web: ~0.19.6
+    sixedge: 0.0.1
     vercel: latest
   languageName: unknown
   linkType: soft
@@ -17116,6 +17117,28 @@ __metadata:
   checksum: aba6438f46d2bfcef94cf112c835ab395172c75f67453fe05c340c770d3c402363018ae1ab4172a1026a90c47eaccf3af7b6ff6fa749a680c2929bd7fa2b37a4
   languageName: node
   linkType: hard
+
+"sixedge@0.0.1, sixedge@workspace:packages/sixedge":
+  version: 0.0.0-use.local
+  resolution: "sixedge@workspace:packages/sixedge"
+  dependencies:
+    "@my/ui": 0.0.1
+    "@tamagui/animations-react-native": latest
+    "@tamagui/colors": latest
+    "@tamagui/font-inter": latest
+    "@tamagui/lucide-icons": latest
+    "@tamagui/shorthands": latest
+    "@tamagui/themes": latest
+    "@types/react": ^18.0.27
+    "@types/react-native": ^0.71.3
+    bcrypt: ~5.1.1
+    cookie: 0.5.0
+    jsonwebtoken: ~9.0.2
+    mongodb: ~6.1.0
+    tamagui: latest
+    zod: ~3.22.4
+  languageName: unknown
+  linkType: soft
 
 "slash@npm:^3.0.0":
   version: 3.0.0

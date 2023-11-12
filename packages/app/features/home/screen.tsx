@@ -10,7 +10,7 @@ import {
   YStack,
 } from '@my/ui'
 import { ChevronDown, ChevronUp } from '@tamagui/lucide-icons'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useLink } from 'solito/link'
 
 export function HomeScreen() {

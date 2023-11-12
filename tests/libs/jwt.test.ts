@@ -1,4 +1,4 @@
-import { jwtSign, jwtVerify } from '@sixedge/libs';
+import { jwtSign, jwtVerify } from 'sixedge';
 
 const JWT_SECRET = "secret1234"
 describe('Test JWT', () => {

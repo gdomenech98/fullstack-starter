@@ -1,10 +1,10 @@
 import { MongoDB } from "../../db";
-import { jwtSign } from "../jwt";
 import ErrorResponse from "../../api/ErrorResponse";
 import { crypt, validate } from '../crypt';
 import { Auth } from "../models/Auth";
 import { UserModel, UserType } from "../models/User";
 import { SessionModel } from "../models/Session";
+
 require('dotenv').config({ path: __dirname + '/../../../../../.env' });
 
 export const authRouter = (app) => {
