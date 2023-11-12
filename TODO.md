@@ -1,8 +1,9 @@
-2. Restructurar sixedge
-1. Recuperar els imports de /api a mongodb
-2. Recuperar tests a green
-2. Models should extend base model, at least UserModel
+1. Jotai store example
+2. Reestructurar sixedge
+3. Afegir coses de tamagui i provar de crear una pantalla amb tamagui i next
+2. Models should extend BaseModel, at least UserModel
 3. Test LCRUD with some functions and hooks to modify the result
+// Monday
 4. Session state amb cookie/barier header
 5. Crear un admin panel (dataview componennt for dashboard de dominios)
 6. Implement SSR

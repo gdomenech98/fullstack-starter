@@ -3691,20 +3691,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@sixedge/libs@workspace:packages/sixedge(legacy)":
-  version: 0.0.0-use.local
-  resolution: "@sixedge/libs@workspace:packages/sixedge(legacy)"
-  dependencies:
-    "@types/node": ~20.7.2
-    bcrypt: ~5.1.1
-    cookie: 0.5.0
-    jsonwebtoken: ~9.0.2
-    mongodb: ~6.1.0
-    typescript: ~5.2.2
-    zod: ~3.22.4
-  languageName: unknown
-  linkType: soft
-
 "@swc/helpers@npm:0.5.2":
   version: 0.5.2
   resolution: "@swc/helpers@npm:0.5.2"

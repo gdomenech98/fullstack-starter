@@ -1,2 +1,2 @@
-// export * from './authRouter';
+export * from './authRouter';
 export * from './authenticationMiddleware';
