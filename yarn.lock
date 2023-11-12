@@ -3038,7 +3038,9 @@ __metadata:
   dependencies:
     "@tamagui/animations-react-native": latest
     "@tamagui/build": latest
+    "@tamagui/font-cherry-bomb": 1.76.0
     "@tamagui/font-inter": latest
+    "@tamagui/font-munro": ~1.76.0
     "@tamagui/react-native-media-driver": latest
     "@tamagui/shorthands": latest
     "@tamagui/themes": latest
@@ -4143,12 +4145,30 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@tamagui/font-cherry-bomb@npm:1.76.0":
+  version: 1.76.0
+  resolution: "@tamagui/font-cherry-bomb@npm:1.76.0"
+  dependencies:
+    "@tamagui/core": 1.76.0
+  checksum: bd28282a886dc51122fed769bf4b464ad66e531d015e58fa9dbafdedb09534da3a140bd016311d391b52da3822b5ba268fd09697227af3fc5f9b1a94348f84fe
+  languageName: node
+  linkType: hard
+
 "@tamagui/font-inter@npm:1.76.0, @tamagui/font-inter@npm:latest":
   version: 1.76.0
   resolution: "@tamagui/font-inter@npm:1.76.0"
   dependencies:
     "@tamagui/core": 1.76.0
   checksum: 7614ed3ee87cb2ce02c531cd724a3e03125b165b1066831c23661c54dc56ebf78b667b0c00532cd8d9871c4a929235b0a136ffa927d9d762451e3cd5babbd8d1
+  languageName: node
+  linkType: hard
+
+"@tamagui/font-munro@npm:~1.76.0":
+  version: 1.76.0
+  resolution: "@tamagui/font-munro@npm:1.76.0"
+  dependencies:
+    "@tamagui/core": 1.76.0
+  checksum: ea5c6fce716085279e2954790cb41074b91fa39679ca942d1b5fbe8f7b9974183675f77c76657ca8b0d1ba92c42e76ec40edea41629a0e747844eac7732dbe8f
   languageName: node
   linkType: hard
 

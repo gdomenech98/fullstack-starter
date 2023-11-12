@@ -18,7 +18,9 @@
   },
   "dependencies": {
     "@tamagui/animations-react-native": "latest",
+    "@tamagui/font-cherry-bomb": "1.76.0",
     "@tamagui/font-inter": "latest",
+    "@tamagui/font-munro": "~1.76.0",
     "@tamagui/react-native-media-driver": "latest",
     "@tamagui/shorthands": "latest",
     "@tamagui/themes": "latest",

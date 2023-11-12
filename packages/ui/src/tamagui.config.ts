@@ -3,12 +3,20 @@ import { createInterFont } from '@tamagui/font-inter'
 import { shorthands } from '@tamagui/shorthands'
 import { themes, tokens } from '@tamagui/themes'
 import { createMedia } from '@tamagui/react-native-media-driver'
-
 import { animations } from './animations'
+import { createCherryBombFont } from '@tamagui/font-cherry-bomb'
+import { createMunroFont } from '@tamagui/font-munro'
+import { createSilkscreenFont } from '@tamagui/font-silkscreen'
 
+export const cherryBombFont = createCherryBombFont()
+export const munroFont = createMunroFont()
+const silkscreenFont = createSilkscreenFont()
 const headingFont = createInterFont({
   size: {
+    5: 13,
     6: 15,
+    9: 32,
+    10: 44,
   },
   transform: {
     6: 'uppercase',
@@ -33,8 +41,11 @@ const headingFont = createInterFont({
     14: -5,
     15: -6,
   },
+  // for native
   face: {
     700: { normal: 'InterBold' },
+    800: { normal: 'InterBold' },
+    900: { normal: 'InterBold' },
   },
 })
 
@@ -59,6 +70,10 @@ export const config = createTamagui({
   fonts: {
     body: bodyFont,
     heading: headingFont,
+    silkscreen: silkscreenFont,
+    munro: munroFont,
+    cherryBomb: cherryBombFont,
+    //Add fonts created
   },
   themes,
   tokens,
