@@ -2,7 +2,6 @@ import { H4, Paragraph, Spacer, Text, XStack, YStack } from 'tamagui'
 import { ContainerLarge } from './Container'
 import { ExternalIcon } from './ExternalIcon'
 import { ParagraphLink } from './Link'
-import { Logo } from './Header'
 
 export const CustomFooter = () => {
   return (
@@ -30,7 +29,6 @@ export const CustomFooter = () => {
             >
               homepage
             </Text>
-            <Logo text="GERARD" />
             <Paragraph mt="$2" size="$3">
               by{' '}
               <ParagraphLink
