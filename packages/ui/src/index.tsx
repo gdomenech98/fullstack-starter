@@ -27,6 +27,7 @@ export * from './components/ThemeToggle';
 export * from './components/TintSection';
 export * from './components/unwrapText';
 export * from './components/useOnIntersecting';
+export * from './components/Card1';
 
 
 

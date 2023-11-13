@@ -17,6 +17,8 @@
     "watch": "tamagui-build --watch"
   },
   "dependencies": {
+    "@tamagui/animations-css": "latest",
+    "@tamagui/animations-moti": "latest",
     "@tamagui/animations-react-native": "latest",
     "@tamagui/font-cherry-bomb": "1.76.0",
     "@tamagui/font-inter": "latest",
@@ -25,6 +27,7 @@
     "@tamagui/shorthands": "latest",
     "@tamagui/themes": "latest",
     "@tamagui/toast": "latest",
+    "react-native-reanimated": "^3.5.4",
     "tamagui": "latest"
   },
   "devDependencies": {

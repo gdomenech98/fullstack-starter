@@ -6,14 +6,10 @@ import { useTintSectionIndex } from './TintSection'
 
 export const PageGlow = memo(() => {
   const { tints, tint, name, tintIndex } = useTint()
-  const isHeroBelowColor = tint === 'blue' || tint === 'green' || tint === 'purple'
   const [index, setIndex] = useState(0)
-  const isAtTop = index <= 1
-  const isOnHeroBelow = isAtTop && isHeroBelowColor
   const [scrollTop, setScrollTopRaw] = useState(0)
   const setScrollTop = useDebounce(setScrollTopRaw, 200)
-  const xs = 400
-  const scale = isOnHeroBelow ? 0.5 : 1
+  const scale =  1
 
   if (isClient) {
     useTintSectionIndex((index) => {
@@ -27,9 +23,7 @@ export const PageGlow = memo(() => {
     return (
       <>
         {tints.map((cur, i) => {
-          const isDouble = name === 'xmas' || name === 'easter'
-          const active = isDouble ? i == 0 || i == 1 : cur === tint
-          const isOpposite = isDouble && cur === 'green' && tint !== cur
+          const active = cur === tint
           return (
             <YStack
               key={`${cur}${i}`}
@@ -40,7 +34,7 @@ export const PageGlow = memo(() => {
               o={active ? 0.3 : 0}
               fullscreen
               left={`calc(50vw - 500px)`}
-              x={isOnHeroBelow ? 0 : isDouble ? (isOpposite ? -500 : 500) : 0}
+              x={0}
               scale={scale}
               className="hero-blur"
             />
@@ -62,11 +56,6 @@ export const PageGlow = memo(() => {
       zi={-1}
       x={0}
       y={scrollTop}
-      {...(isOnHeroBelow && {
-        animation: 'quick',
-        x: tintIndex === 2 ? -xs : tintIndex === 4 ? xs : 0,
-        y: 300,
-      })}
       // display={isResizing ? 'none' : 'flex'}
     >
       {glows}
