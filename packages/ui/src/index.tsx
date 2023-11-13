@@ -1,11 +1,13 @@
 export * from 'tamagui';
 export * from '@tamagui/toast';
 export { config } from './tamagui.config';
+export * from './components/DataTable';
 export * from './components/Tints/useTint';
 export * from './components/Tints/tints';
 export * from './components/Toast';
 export * from './components/AnimatedTintLogo';
 export * from './components/Card';
+export * from './components/Card1';
 export * from './components/ColorToggleButton';
 export * from './components/Container';
 export * from './components/DefaultLayout';
@@ -27,7 +29,7 @@ export * from './components/ThemeToggle';
 export * from './components/TintSection';
 export * from './components/unwrapText';
 export * from './components/useOnIntersecting';
-export * from './components/Card1';
+
 
 
 
