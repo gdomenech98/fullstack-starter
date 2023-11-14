@@ -1,37 +1,85 @@
 import React from 'react'
 import {
   DefaultLayout, PageGlow, ThemeTint,
-  useTint, H2, H1, YStack, DataTable
+  useTint, YStack, DataTable, XStack, Paragraph, Accordion, Square
 } from '@my/ui';
-export function DashBoardScreen(props) {
-  const { tint } = useTint()
-  const data = [...props.data]
+import { ChevronDown } from '@tamagui/lucide-icons'
+import { User, Tag } from '@tamagui/lucide-icons'
+
+const DashboardSideMenu = (props) => {
+
+  const getIcon = (itemKey: string) => {
+    const icons = {
+      user: User
+    }
+    const defaultIcon = Tag
+    return icons[itemKey] ?? defaultIcon
+  }
+
+  const sections = ["users", "tests"]
   return (
-    <YStack>
-      <DefaultLayout
-        footer={<></>}
-      >
-        <PageGlow />
-        <YStack f={1} jc="center" p="$4" space height="200vh" >
-          <YStack space="$4" display='flex' f={1}>
-            <H1 ta="center">Dashboard.</H1>
-            <H2 ta="center" theme={"alt1"}>Users</H2>
-            <ThemeTint>
-              <YStack px="20%">
-                <DataTable
-                  schema={["id","identifier", "password", "type"]}
-                  data={data}
-                />
-              </YStack>
-            </ThemeTint>
-          </YStack>
-        </YStack>
-      </DefaultLayout >
+    <YStack w={"$18"}>
+      <Accordion overflow="hidden" type="multiple">
+        <Accordion.Item value="a1" >
+          <Accordion.Trigger flexDirection="row" bw="$0">
+            {({ open }) => (
+              <>
+                <Square mr="$4" animation="quick" rotate={open ? '180deg' : '0deg'}>
+                  <ChevronDown size="$1" />
+                </Square>
+                <Paragraph>Domain</Paragraph>
+              </>
+            )}
+          </Accordion.Trigger>
+          {
+            sections.map(section => (
+              <Accordion.Content p="$4" fd="row" jc="center" cursor="poin">
+                <XStack space="$4" ai="center">
+                  <ThemeTint>
+                    {
+                      React.createElement(getIcon(section), { size:"$1", color:"$color8"})
+                    }
+                  </ThemeTint>
+                  <Paragraph >
+                    {section}
+                  </Paragraph>
+                </XStack>
+              </Accordion.Content>
+            ))
+          }
+        </Accordion.Item>
+      </Accordion>
     </YStack >
   )
 }
 
-let data=[
+export function DashBoardScreen(props) {
+  const { tint } = useTint()
+  const data = [...props.data]
+
+  return (
+    <YStack bg="$color2" fullscreen>
+      <DefaultLayout footer={<></>}>
+        <XStack>
+          <DashboardSideMenu />
+          <PageGlow />
+          <YStack f={1} jc="center" p="$6" space >
+            <YStack space="$4" display='flex' f={1}>
+              <YStack pl="$3">
+                <DataTable
+                  schema={["id", "identifier", "password", "type"]}
+                  data={data}
+                />
+              </YStack>
+            </YStack>
+          </YStack>
+        </XStack>
+      </DefaultLayout>
+    </YStack >
+  )
+}
+
+let data = [
   {
     name: 'id',
     type: 'string',
