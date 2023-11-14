@@ -1,8 +1,8 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {
-  DefaultLayout, PageGlow, ThemeTint,
-  useTint, YStack, DataTable, XStack, Paragraph, Accordion, Square
+  DefaultLayout, PageGlow, ThemeTint, YStack, Text, XStack, Paragraph, Accordion, Square, Separator, Checkbox
 } from '@my/ui';
+import { Check as CheckIcon } from '@tamagui/lucide-icons'
 import { ChevronDown } from '@tamagui/lucide-icons'
 import { User, Tag } from '@tamagui/lucide-icons'
 
@@ -37,7 +37,7 @@ const DashboardSideMenu = (props) => {
                 <XStack space="$4" ai="center">
                   <ThemeTint>
                     {
-                      React.createElement(getIcon(section), { size:"$1", color:"$color8"})
+                      React.createElement(getIcon(section), { size: "$1", color: "$color8" })
                     }
                   </ThemeTint>
                   <Paragraph >
@@ -53,91 +53,85 @@ const DashboardSideMenu = (props) => {
   )
 }
 
-export function DashBoardScreen(props) {
-  const { tint } = useTint()
-  const data = [...props.data]
+const DashBoardDomainTable = ({ title, data, schema }: { title?: string, data: any[], schema: any[] }) => {
+  const initialColumn = {}
+  const columns = [
+    { label: "id", selector: "id" },
+    { label: "email", selector: "identifier" },
+    { label: "type", selector: "type", cell: (row) => (<ThemeTint><Text bg="$color8" o={0.8} br="$11" py="$2" px="$3" color="$color4">{row.type}</Text></ThemeTint>) }
+  ]
+  const [selectedItem, setSelectedItem] = useState();
+  const RowActions = ({ onPress }: any) => {
+    return (<XStack w="$6">
+      <Checkbox size={"$6"} onPress={onPress}>
+        <Checkbox.Indicator>
+          <CheckIcon />
+        </Checkbox.Indicator>
+      </Checkbox>
+    </XStack>)
+  }
+  return (
+    <YStack p="$6">
+      <XStack mb="$6">
+        <Paragraph fontSize={"$5"}>{title + " ["}</Paragraph>
+        <ThemeTint><Paragraph fontSize={"$5"} theme={"alt2"}>{data.length}</Paragraph></ThemeTint>
+        <Paragraph>{"]"}</Paragraph>
+      </XStack>
+      <YStack >
+        <XStack minHeight="$6" flex={1}>
+          <RowActions onPress={() => console.log('SELECTED ALL!')} />
+          {
+            columns.map((column, key) => (
+              <XStack key={key} flex={1} width={column.width ?? "100%"}>
+                <ThemeTint>
+                  <Paragraph fontWeight={"700"} theme={"alt2"}>{column.label}</Paragraph >
+                </ThemeTint>
+              </XStack>
+            ))
+          }
+        </XStack>
+        {/* ROWS */}
+        {
+          data.map(item => (
+            <YStack onPress={() => setSelectedItem(item)}>
+              <XStack key={item.id} minHeight="$6" flex={1} ai="center">
+                <RowActions onPress={() => console.log('Selected: ', item.id)} />
+                {columns.map(column => (
+                  <XStack key={`${item.id}-${column.selector}`} flex={1} width={column.width ?? "100%"}>
+                    {
+                      column.cell ?
+                        column.cell(item)
+                        : <Text>{item[column.selector]}</Text>
+                    }
+                  </XStack>
+                ))}
+              </XStack>
+              <Separator />
+            </YStack>
+          ))
+        }
+      </YStack>
+    </YStack >
+  )
+}
 
+export function DashBoardScreen(props) {
+  const data = [...props.data]
   return (
     <YStack bg="$color2" fullscreen>
       <DefaultLayout footer={<></>}>
-        <XStack>
+        <XStack f={1}>
           <DashboardSideMenu />
           <PageGlow />
-          <YStack f={1} jc="center" p="$6" space >
-            <YStack space="$4" display='flex' f={1}>
-              <YStack pl="$3">
-                <DataTable
-                  schema={["id", "identifier", "password", "type"]}
-                  data={data}
-                />
-              </YStack>
-            </YStack>
+          <YStack f={1} m="$3" bg="$color3" br="$8" >
+            <DashBoardDomainTable
+              data={data}
+              schema={["id", "identifier", "type"]}
+              title={"Users"}
+            />
           </YStack>
         </XStack>
       </DefaultLayout>
     </YStack >
   )
 }
-
-let data = [
-  {
-    name: 'id',
-    type: 'string',
-    description: `Optional for usage with Label`,
-  },
-  {
-    name: 'size',
-    type: 'SizeTokens',
-    description: `Set the size of itself and pass to all inner elements`,
-  },
-  {
-    name: 'children',
-    type: 'React.ReactNode',
-    description: `Select children API components`,
-  },
-  {
-    name: 'value',
-    type: 'string',
-    description: `Controlled value`,
-  },
-  {
-    name: 'defaultValue',
-    type: 'string',
-    description: `Default value`,
-  },
-  {
-    name: 'onValueChange',
-    type: '(value: string) => void',
-    description: `Callback on value change`,
-  },
-  {
-    name: 'open',
-    type: 'boolean',
-    description: `Controlled open value`,
-  },
-  {
-    name: 'defaultOpen',
-    type: 'boolean',
-    description: `Default open value`,
-  },
-  {
-    name: 'onOpenChange',
-    type: '(open: boolean) => void',
-    description: `Callback on open change`,
-  },
-  {
-    name: 'dir',
-    type: 'Direction',
-    description: `Direction of text display`,
-  },
-  {
-    name: 'name',
-    type: 'string',
-    description: `For use in forms`,
-  },
-  {
-    name: 'native',
-    type: 'NativeValue',
-    description: `If passed, will render a native component instead of the custom one. Currently only \`web\` is supported.`,
-  },
-]
