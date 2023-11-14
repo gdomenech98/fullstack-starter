@@ -4,9 +4,8 @@ import {
   useTint, H2, H1, YStack, DataTable
 } from '@my/ui';
 export function DashBoardScreen(props) {
-  console.log(props)
   const { tint } = useTint()
-
+  const data = [...props.data]
   return (
     <YStack>
       <DefaultLayout
@@ -20,68 +19,8 @@ export function DashBoardScreen(props) {
             <ThemeTint>
               <YStack px="20%">
                 <DataTable
-                  data={[
-                    {
-                      name: 'id',
-                      type: 'string',
-                      description: `Optional for usage with Label`,
-                    },
-                    {
-                      name: 'size',
-                      type: 'SizeTokens',
-                      description: `Set the size of itself and pass to all inner elements`,
-                    },
-                    {
-                      name: 'children',
-                      type: 'React.ReactNode',
-                      description: `Select children API components`,
-                    },
-                    {
-                      name: 'value',
-                      type: 'string',
-                      description: `Controlled value`,
-                    },
-                    {
-                      name: 'defaultValue',
-                      type: 'string',
-                      description: `Default value`,
-                    },
-                    {
-                      name: 'onValueChange',
-                      type: '(value: string) => void',
-                      description: `Callback on value change`,
-                    },
-                    {
-                      name: 'open',
-                      type: 'boolean',
-                      description: `Controlled open value`,
-                    },
-                    {
-                      name: 'defaultOpen',
-                      type: 'boolean',
-                      description: `Default open value`,
-                    },
-                    {
-                      name: 'onOpenChange',
-                      type: '(open: boolean) => void',
-                      description: `Callback on open change`,
-                    },
-                    {
-                      name: 'dir',
-                      type: 'Direction',
-                      description: `Direction of text display`,
-                    },
-                    {
-                      name: 'name',
-                      type: 'string',
-                      description: `For use in forms`,
-                    },
-                    {
-                      name: 'native',
-                      type: 'NativeValue',
-                      description: `If passed, will render a native component instead of the custom one. Currently only \`web\` is supported.`,
-                    },
-                  ]}
+                  schema={["id","identifier", "password", "type"]}
+                  data={data}
                 />
               </YStack>
             </ThemeTint>
@@ -91,3 +30,66 @@ export function DashBoardScreen(props) {
     </YStack >
   )
 }
+
+let data=[
+  {
+    name: 'id',
+    type: 'string',
+    description: `Optional for usage with Label`,
+  },
+  {
+    name: 'size',
+    type: 'SizeTokens',
+    description: `Set the size of itself and pass to all inner elements`,
+  },
+  {
+    name: 'children',
+    type: 'React.ReactNode',
+    description: `Select children API components`,
+  },
+  {
+    name: 'value',
+    type: 'string',
+    description: `Controlled value`,
+  },
+  {
+    name: 'defaultValue',
+    type: 'string',
+    description: `Default value`,
+  },
+  {
+    name: 'onValueChange',
+    type: '(value: string) => void',
+    description: `Callback on value change`,
+  },
+  {
+    name: 'open',
+    type: 'boolean',
+    description: `Controlled open value`,
+  },
+  {
+    name: 'defaultOpen',
+    type: 'boolean',
+    description: `Default open value`,
+  },
+  {
+    name: 'onOpenChange',
+    type: '(open: boolean) => void',
+    description: `Callback on open change`,
+  },
+  {
+    name: 'dir',
+    type: 'Direction',
+    description: `Direction of text display`,
+  },
+  {
+    name: 'name',
+    type: 'string',
+    description: `For use in forms`,
+  },
+  {
+    name: 'native',
+    type: 'NativeValue',
+    description: `If passed, will render a native component instead of the custom one. Currently only \`web\` is supported.`,
+  },
+]
