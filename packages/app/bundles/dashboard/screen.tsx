@@ -48,8 +48,8 @@ function DashboardSideMenu(props) {
   const sections = ["users", "tests"]
   return (
     <YStack w={"$18"}>
-      <Accordion overflow="hidden" type="multiple">
-        <Accordion.Item value="a1">
+      <Accordion overflow="hidden" type="multiple" defaultValue={["Domain"]}>
+        <Accordion.Item value="Domain">
           <Accordion.Trigger flexDirection="row" bw="$0" bg="$color4">
             {({ open }) => (
               <>
