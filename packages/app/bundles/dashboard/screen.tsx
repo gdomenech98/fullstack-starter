@@ -1,12 +1,41 @@
 import React, { useEffect, useState } from 'react'
 import {
-  DefaultLayout, PageGlow, ThemeTint, YStack, Text, XStack, Paragraph, Accordion, Square, Separator, Checkbox
+  DefaultLayout, PageGlow, ThemeTint, YStack, Text, XStack, Paragraph, Accordion, Square, Separator, Checkbox, ZStack
 } from '@my/ui';
 import { Check as CheckIcon } from '@tamagui/lucide-icons'
 import { ChevronDown } from '@tamagui/lucide-icons'
 import { User, Tag } from '@tamagui/lucide-icons'
 
-const DashboardSideMenu = (props) => {
+export function DashBoardScreen(props) {
+  const data = [...props.data]
+  return (
+    <YStack bg="$color4" fullscreen>
+      <DefaultLayout footer={<></>}>
+        <XStack f={1}>
+          <DashboardSideMenu />
+          <PageGlow />
+          <YStack f={1} m="$3" bg="$color3" br="$8" elevation={"$0.75"}>
+            <DashBoardDomainTable
+              columns={
+                [
+                  { label: "id", selector: "id" },
+                  { label: "email", selector: "identifier" },
+                  { label: "password", selector: "password", cell: (row) => (<Text theme="alt1">********</Text>) },
+                  { label: "type", selector: "type", cell: (row) => (<ThemeTint><Text bg="$color6" br="$11" py="$2" px="$3" color="$color10">{row.type}</Text></ThemeTint>) }
+                ]
+              }
+              data={data}
+              schema={["id", "identifier", "type"]}
+              title={"Users"}
+            />
+          </YStack>
+        </XStack>
+      </DefaultLayout>
+    </YStack >
+  )
+}
+
+function DashboardSideMenu(props) {
 
   const getIcon = (itemKey: string) => {
     const icons = {
@@ -20,8 +49,8 @@ const DashboardSideMenu = (props) => {
   return (
     <YStack w={"$18"}>
       <Accordion overflow="hidden" type="multiple">
-        <Accordion.Item value="a1" >
-          <Accordion.Trigger flexDirection="row" bw="$0">
+        <Accordion.Item value="a1">
+          <Accordion.Trigger flexDirection="row" bw="$0" bg="$color4">
             {({ open }) => (
               <>
                 <Square mr="$4" animation="quick" rotate={open ? '180deg' : '0deg'}>
@@ -33,7 +62,7 @@ const DashboardSideMenu = (props) => {
           </Accordion.Trigger>
           {
             sections.map(section => (
-              <Accordion.Content p="$4" fd="row" jc="center" cursor="poin">
+              <Accordion.Content p="$4" fd="row" jc="center" cursor="pointer" bg="$color4">
                 <XStack space="$4" ai="center">
                   <ThemeTint>
                     {
@@ -53,44 +82,28 @@ const DashboardSideMenu = (props) => {
   )
 }
 
-const DashBoardDomainTable = ({ title, data, schema }: { title?: string, data: any[], schema: any[] }) => {
-  const columns = [
-    { label: "id", selector: "id" },
-    { label: "email", selector: "identifier" },
-    { label: "type", selector: "type", cell: (row) => (<ThemeTint><Text bg="$color6" br="$11" py="$2" px="$3" color="$color10">{row.type}</Text></ThemeTint>) }
-  ]
-
+function DashBoardDomainTable({ title, data, columns, schema }: { title?: string, columns: any[], data: any[], schema: any[] }) {
   const [selectedAll, setSelectedAll] = useState(false)
   const [selectedItems, setSelectedItems] = useState<any>([]);
 
   useEffect(() => {
-    if (selectedAll) {
-      console.log('DEV: data', data)
-      setSelectedItems(data)
-    }
-    else {
-      setSelectedItems([])
-    }
+    setSelectedItems(selectedAll ? data : [])
   }, [selectedAll])
 
   const toggeSelect = (item) => {
     const itemFound = selectedItems.find(elem => elem.id === item.id)
-    let newArray = itemFound ? 
-                    selectedItems.filter(elem => elem.id !== item.id )
-                    :selectedItems.concat(item)
+    let newArray = itemFound ?
+      selectedItems.filter(elem => elem.id !== item.id)
+      : selectedItems.concat(item)
     setSelectedItems(newArray)
   }
-
-  useEffect(() => {
-    console.log('DEV: aaaa', selectedItems)
-  },[selectedItems])
 
   return (
     <YStack p="$6">
       <XStack mb="$6">
         <Paragraph fontSize={"$5"}>{title + " ["}</Paragraph>
-        <ThemeTint><Paragraph fontSize={"$5"} theme={"alt2"}>{data.length}</Paragraph></ThemeTint>
-        <Paragraph>{"]"}</Paragraph>
+        <ThemeTint><Paragraph fontSize={"$5"} color={"$color8"}>{data.length}</Paragraph></ThemeTint>
+        <Paragraph fontSize={"$5"}>{"]"}</Paragraph>
       </XStack>
       <YStack >
         <XStack minHeight="$6" flex={1}>
@@ -99,7 +112,7 @@ const DashBoardDomainTable = ({ title, data, schema }: { title?: string, data: a
             columns.map((column, key) => (
               <XStack key={key} flex={1} width={column.width ?? "100%"}>
                 <ThemeTint>
-                  <Paragraph fontWeight={"600"} color={"$color7"}>{column.label}</Paragraph >
+                  <Paragraph fontWeight={"600"} color={"$color8"}>{column.label}</Paragraph >
                 </ThemeTint>
               </XStack>
             ))
@@ -116,12 +129,12 @@ const DashBoardDomainTable = ({ title, data, schema }: { title?: string, data: a
                     {
                       column.cell ?
                         column.cell(item)
-                        : <Text>{item[column.selector]}</Text>
+                        : <Text theme="alt1">{item[column.selector]}</Text>
                     }
                   </XStack>
                 ))}
               </XStack>
-              <Separator />
+              <Separator borderColor={"$color8"} />
             </YStack>
           ))
         }
@@ -133,30 +146,11 @@ const DashBoardDomainTable = ({ title, data, schema }: { title?: string, data: a
 function RowActions({ onPress, checked }: any) {
   return (<XStack w="$6">
     <Checkbox checked={checked} size={"$6"} onPress={onPress}>
-      <Checkbox.Indicator>
-        <CheckIcon />
-      </Checkbox.Indicator>
+      <ThemeTint>
+        <Checkbox.Indicator>
+          <CheckIcon color="$color8" />
+        </Checkbox.Indicator>
+      </ThemeTint>
     </Checkbox>
   </XStack>)
-}
-
-export function DashBoardScreen(props) {
-  const data = [...props.data]
-  return (
-    <YStack bg="$color2" fullscreen>
-      <DefaultLayout footer={<></>}>
-        <XStack f={1}>
-          <DashboardSideMenu />
-          <PageGlow />
-          <YStack f={1} m="$3" bg="$color3" br="$8" >
-            <DashBoardDomainTable
-              data={data}
-              schema={["id", "identifier", "type"]}
-              title={"Users"}
-            />
-          </YStack>
-        </XStack>
-      </DefaultLayout>
-    </YStack >
-  )
 }
