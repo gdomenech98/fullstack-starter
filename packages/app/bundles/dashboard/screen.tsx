@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   DefaultLayout, PageGlow, ThemeTint, YStack, Text, XStack, Paragraph, Accordion, Square, Separator, Checkbox
 } from '@my/ui';
@@ -54,22 +54,37 @@ const DashboardSideMenu = (props) => {
 }
 
 const DashBoardDomainTable = ({ title, data, schema }: { title?: string, data: any[], schema: any[] }) => {
-  const initialColumn = {}
   const columns = [
     { label: "id", selector: "id" },
     { label: "email", selector: "identifier" },
     { label: "type", selector: "type", cell: (row) => (<ThemeTint><Text bg="$color8" o={0.8} br="$11" py="$2" px="$3" color="$color4">{row.type}</Text></ThemeTint>) }
   ]
-  const [selectedItem, setSelectedItem] = useState();
-  const RowActions = ({ onPress }: any) => {
-    return (<XStack w="$6">
-      <Checkbox size={"$6"} onPress={onPress}>
-        <Checkbox.Indicator>
-          <CheckIcon />
-        </Checkbox.Indicator>
-      </Checkbox>
-    </XStack>)
+
+  const [selectedAll, setSelectedAll] = useState(false)
+  const [selectedItems, setSelectedItems] = useState<any>([]);
+
+  useEffect(() => {
+    if (selectedAll) {
+      console.log('DEV: data', data)
+      setSelectedItems(data)
+    }
+    else {
+      setSelectedItems([])
+    }
+  }, [selectedAll])
+
+  const toggeSelect = (item) => {
+    const itemFound = selectedItems.find(elem => elem.id === item.id)
+    let newArray = itemFound ? 
+                    selectedItems.filter(elem => elem.id !== item.id )
+                    :selectedItems.concat(item)
+    setSelectedItems(newArray)
   }
+
+  useEffect(() => {
+    console.log('DEV: aaaa', selectedItems)
+  },[selectedItems])
+
   return (
     <YStack p="$6">
       <XStack mb="$6">
@@ -79,7 +94,7 @@ const DashBoardDomainTable = ({ title, data, schema }: { title?: string, data: a
       </XStack>
       <YStack >
         <XStack minHeight="$6" flex={1}>
-          <RowActions onPress={() => console.log('SELECTED ALL!')} />
+          <RowActions checked={selectedAll} onPress={() => setSelectedAll(!selectedAll)} />
           {
             columns.map((column, key) => (
               <XStack key={key} flex={1} width={column.width ?? "100%"}>
@@ -93,9 +108,9 @@ const DashBoardDomainTable = ({ title, data, schema }: { title?: string, data: a
         {/* ROWS */}
         {
           data.map(item => (
-            <YStack onPress={() => setSelectedItem(item)}>
+            <YStack>
               <XStack key={item.id} minHeight="$6" flex={1} ai="center">
-                <RowActions onPress={() => console.log('Selected: ', item.id)} />
+                <RowActions checked={selectedItems.map(elem => elem.id).includes(item.id)} onPress={() => toggeSelect(item)} />
                 {columns.map(column => (
                   <XStack key={`${item.id}-${column.selector}`} flex={1} width={column.width ?? "100%"}>
                     {
@@ -113,6 +128,16 @@ const DashBoardDomainTable = ({ title, data, schema }: { title?: string, data: a
       </YStack>
     </YStack >
   )
+}
+
+function RowActions({ onPress, checked }: any) {
+  return (<XStack w="$6">
+    <Checkbox checked={checked} size={"$6"} onPress={onPress}>
+      <Checkbox.Indicator>
+        <CheckIcon />
+      </Checkbox.Indicator>
+    </Checkbox>
+  </XStack>)
 }
 
 export function DashBoardScreen(props) {
