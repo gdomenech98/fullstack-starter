@@ -9,7 +9,7 @@ const loadIndexes = async () => {
     try {
         const mongodb = await MongoDB.connect(process.env.DB_URI);
         mongodb.generateIndex("users", "id", "unique")
-        mongodb.generateIndex("users", "email", "unique")
+        mongodb.generateIndex("users", "identifier", "unique")
     } catch (e) {
         console.log()
     }
