@@ -68,12 +68,14 @@ export class MongoDB {
 
     async update(collectionName: string, dbquery: any, data: any) { // update One
         const collection = this.getDB().collection(collectionName);
+        let dbData;
         try {
-            await collection.replaceOne(dbquery, data)
-            return data
+            dbData = await collection.replaceOne(dbquery, data)
         } catch (e) {
             if (e.code == 11000) throw "Duplicated key"
         }
+        if (!dbData.matchedCount) throw "Not found"
+        return data
     }
 
     async delete(collectionName: string, dbquery: any) { // delete One

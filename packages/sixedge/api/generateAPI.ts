@@ -11,7 +11,6 @@ const getDefaultDB = (async () => {
 export async function createAPI(entity, modelInstance: any, schema: any, prefix: string = "/api/v1/", dbInstance: any = undefined): Promise<Router> {
     const router = express.Router();
     let db = dbInstance ?? await getDefaultDB()
-    console.log('DEV: ', db)
     // List
     router.get(prefix + entity, async (req: Request, res: Response) => {
         try {
@@ -36,8 +35,8 @@ export async function createAPI(entity, modelInstance: any, schema: any, prefix:
     router.post(prefix + entity, async (req: Request, res: Response) => {
         const payload = req.body;
         try {
-
-            res.json("CREATE" + entity + ":" + payload);
+            const data = await db.create(entity, payload);
+            res.json(data)
         } catch (e) {
             ErrorResponse(e, res)
         }
@@ -48,7 +47,8 @@ export async function createAPI(entity, modelInstance: any, schema: any, prefix:
         const { id } = req.params;
         const payload = req.body;
         try {
-            res.json("UPDATE" + entity + ":" + id + "PAY: " + payload);
+            const data = await db.update(entity, {id} ,payload);
+            res.json(data)
         } catch (e) {
             ErrorResponse(e, res)
         }
@@ -57,7 +57,8 @@ export async function createAPI(entity, modelInstance: any, schema: any, prefix:
     router.get(prefix + entity + `/:id/delete`, async (req: Request, res: Response) => {
         const { id } = req.params;
         try {
-            res.json("Delete " + entity + ":" + id)
+            const data = await db.delete(entity, {id});
+            res.json(data)
         } catch (e) {
             ErrorResponse(e, res)
         }
