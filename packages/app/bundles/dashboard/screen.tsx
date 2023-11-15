@@ -57,7 +57,7 @@ const DashBoardDomainTable = ({ title, data, schema }: { title?: string, data: a
   const columns = [
     { label: "id", selector: "id" },
     { label: "email", selector: "identifier" },
-    { label: "type", selector: "type", cell: (row) => (<ThemeTint><Text bg="$color8" o={0.8} br="$11" py="$2" px="$3" color="$color4">{row.type}</Text></ThemeTint>) }
+    { label: "type", selector: "type", cell: (row) => (<ThemeTint><Text bg="$color6" br="$11" py="$2" px="$3" color="$color10">{row.type}</Text></ThemeTint>) }
   ]
 
   const [selectedAll, setSelectedAll] = useState(false)
@@ -99,7 +99,7 @@ const DashBoardDomainTable = ({ title, data, schema }: { title?: string, data: a
             columns.map((column, key) => (
               <XStack key={key} flex={1} width={column.width ?? "100%"}>
                 <ThemeTint>
-                  <Paragraph fontWeight={"700"} theme={"alt2"}>{column.label}</Paragraph >
+                  <Paragraph fontWeight={"600"} color={"$color7"}>{column.label}</Paragraph >
                 </ThemeTint>
               </XStack>
             ))
