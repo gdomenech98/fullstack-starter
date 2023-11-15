@@ -150,7 +150,7 @@ function DashBoardDomainTable({ title, data, columns, schema }: { title?: string
 
 function RowActions({ onPress, checked }: any) {
   return (<XStack w="$6">
-    <Checkbox checked={checked} size={"$6"} onPress={onPress}>
+    <Checkbox checked={checked} size={"$6"} onPress={onPress} bg="$color4">
       <ThemeTint>
         <Checkbox.Indicator>
           <CheckIcon color="$color8" />
