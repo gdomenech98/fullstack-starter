@@ -77,8 +77,7 @@ export class BaseModel<T> {
     }
 
     delete(): BaseModel<T> {
-        // Apply transformations
-        return this.getData()
+        return {...this.getData(), _delete: true} // Apply transformations
     }
 
     onDelete(): BaseModel<T> {

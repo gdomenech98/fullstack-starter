@@ -64,7 +64,7 @@ export async function createAPI(entity, modelInstance: any, schema: any, prefix:
         try {
             const item = await db.read(entity, {id});
             const _data = modelInstance.load(item).delete()
-            const data = await db.delete(entity, {id}); // TODO: Change for update! and modify item from domain, not from infra!
+            const data = await db.update(entity, {id}, _data); 
             const result = modelInstance.load(data).onDelete()
             res.json(result)
         } catch (e) {

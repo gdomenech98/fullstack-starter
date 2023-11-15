@@ -78,14 +78,6 @@ export class MongoDB {
         return data
     }
 
-    async delete(collectionName: string, dbquery: any) { // delete One
-        let data = await this.read(collectionName, dbquery)
-        if (!data) throw "Not found"
-        data = { ...data, _delete: true }; // Sets to deleted
-        await this.update(collectionName, dbquery, data)
-        return data
-    }
-
     async generateIndex(collectionName: string, field: string, indexType: 'unique' | 'text') { // recover one element deleted
         const collection = this.getDB().collection(collectionName);
         switch (indexType) {
