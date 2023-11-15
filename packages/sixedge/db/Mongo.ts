@@ -23,6 +23,7 @@ export class MongoDB {
             return MongoDB._newInstance(uri)
         } catch (e) {
             console.error("Failed to connect to: ", uri)
+            throw e
         }
     }
 

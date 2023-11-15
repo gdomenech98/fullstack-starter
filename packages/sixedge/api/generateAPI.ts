@@ -1,35 +1,66 @@
 import express, { Router, Request, Response } from 'express';
+import { MongoDB } from 'sixedge/db';
+import ErrorResponse from './ErrorResponse';
+require('dotenv').config({ path: __dirname + '/../../../.env' });
 
 // UPDATE STORES
+const getDefaultDB = (async () => {
+    return await MongoDB.connect(process.env.DB_URI);
+})
 
-export function createAPI(entity, modelInstance: any, prefix: string = "/api/v1/",): Router {
+export async function createAPI(entity, modelInstance: any, schema: any, prefix: string = "/api/v1/", dbInstance: any = undefined): Promise<Router> {
     const router = express.Router();
+    let db = dbInstance ?? await getDefaultDB()
+    console.log('DEV: ', db)
     // List
     router.get(prefix + entity, async (req: Request, res: Response) => {
-        res.json("LIST" + entity);
+        try {
+            const data = await db.list(entity, {});
+            res.json(data)
+        } catch (e) {
+            ErrorResponse(e, res)
+        }
+
     });
     // Read
     router.get(prefix + entity + `/:id`, async (req: Request, res: Response) => {
         const { id } = req.params;
-        res.json("READ" + entity + ":" + id);
+        try {
+            const data = await db.read(entity, { id });
+            res.json(data)
+        } catch (e) {
+            ErrorResponse(e, res)
+        }
     });
     // Create
     router.post(prefix + entity, async (req: Request, res: Response) => {
         const payload = req.body;
-        res.json("CREATE" + entity + ":" + payload);
+        try {
+
+            res.json("CREATE" + entity + ":" + payload);
+        } catch (e) {
+            ErrorResponse(e, res)
+        }
 
     });
     // Update
     router.post(prefix + entity + `/:id`, async (req: Request, res: Response) => {
         const { id } = req.params;
         const payload = req.body;
-        res.json("UPDATE" + entity + ":" + id + "PAY: " + payload);
-
+        try {
+            res.json("UPDATE" + entity + ":" + id + "PAY: " + payload);
+        } catch (e) {
+            ErrorResponse(e, res)
+        }
     });
     // Delete
     router.get(prefix + entity + `/:id/delete`, async (req: Request, res: Response) => {
-        const {id} = req.params;
-        res.json("Delete " + entity +":"+ id)
+        const { id } = req.params;
+        try {
+            res.json("Delete " + entity + ":" + id)
+        } catch (e) {
+            ErrorResponse(e, res)
+        }
     });
 
     return router;

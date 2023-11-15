@@ -1,19 +1,29 @@
 import testRouter from "./testRouter";
 import express from 'express';
-import {createAPI, authRouter, MongoDB} from "sixedge";
-require('dotenv').config({ path: __dirname+'/../../../.env' });
+import { createAPI, authRouter, MongoDB } from "sixedge";
 
-const router = express.Router();
-const routerUsers = createAPI("users", null) // Creates auto api for users
+require('dotenv').config({ path: __dirname + '/../../../.env' });
+
 
 const loadIndexes = async () => {
-    const mongodb = await MongoDB.connect(process.env.DB_URI);
-    mongodb.generateIndex("users", "id", "unique")
-    mongodb.generateIndex("users", "email", "unique")
+    try {
+        const mongodb = await MongoDB.connect(process.env.DB_URI);
+        mongodb.generateIndex("users", "id", "unique")
+        mongodb.generateIndex("users", "email", "unique")
+    } catch (e) {
+        console.log()
+    }
+}
+
+const router = express.Router();
+const initializeRouters = async () => {
+    const routerUsers = await createAPI("users", null, null) // Creates auto api for users
+    router.use('/', testRouter);
+    router.use('/', routerUsers);
+    authRouter(router)
 }
 
 loadIndexes();
-router.use('/', testRouter);
-router.use('/', routerUsers);
-authRouter(router)
+initializeRouters();
+
 export default router 
