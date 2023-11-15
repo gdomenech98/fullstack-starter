@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import {
-  DefaultLayout, PageGlow, ThemeTint, YStack, Text, XStack, Paragraph, Accordion, Square, Separator, Checkbox, ZStack
+  DefaultLayout, PageGlow, ThemeTint, YStack, Text, XStack, Paragraph, Accordion, Square, Separator, Checkbox, ZStack, useTheme, useTint
 } from '@my/ui';
 import { Check as CheckIcon } from '@tamagui/lucide-icons'
 import { ChevronDown } from '@tamagui/lucide-icons'
@@ -46,32 +46,37 @@ function DashboardSideMenu(props) {
   }
 
   const sections = ["users", "tests"]
+  const [section, setSection] = useState(sections[0]);
+  const { tint } = useTint();
+
   return (
     <YStack w={"$18"}>
       <Accordion overflow="hidden" type="multiple" defaultValue={["Domain"]}>
         <Accordion.Item value="Domain">
           <Accordion.Trigger flexDirection="row" bw="$0" bg="$color4">
             {({ open }) => (
-              <>
+              <XStack>
                 <Square mr="$4" animation="quick" rotate={open ? '180deg' : '0deg'}>
                   <ChevronDown size="$1" />
                 </Square>
                 <Paragraph>Domain</Paragraph>
-              </>
+              </XStack>
             )}
           </Accordion.Trigger>
           {
-            sections.map(section => (
-              <Accordion.Content p="$4" fd="row" jc="center" cursor="pointer" bg="$color4">
-                <XStack space="$4" ai="center">
-                  <ThemeTint>
-                    {
-                      React.createElement(getIcon(section), { size: "$1", color: "$color8" })
-                    }
-                  </ThemeTint>
-                  <Paragraph >
-                    {section}
-                  </Paragraph>
+            sections.map(sec => (
+              <Accordion.Content onPress={() => setSection(sec)} fd="row" p={0} cursor="pointer" bg="$color4">
+                <XStack py="$2" my="$1" w="90%" btrr="$10" bbrr="$10" bg={section == sec ? "$color6" : undefined} theme={tint as any}>
+                  <XStack f={1} jc="center" ai="center" space="$4">
+                    <ThemeTint>
+                      {
+                        React.createElement(getIcon(sec), { size: "$1", color: "$color8" })
+                      }
+                    </ThemeTint>
+                    <Paragraph >
+                      {sec}
+                    </Paragraph>
+                  </XStack>
                 </XStack>
               </Accordion.Content>
             ))
