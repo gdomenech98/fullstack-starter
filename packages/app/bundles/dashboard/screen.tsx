@@ -115,7 +115,15 @@ function DashBoardDomainTable({ title, data, columns, schema }: { title?: string
       </XStack>
       <YStack>
         <XStack minHeight="$6" flex={1} p="$6">
-          <RowActions checked={selectedAll} onPress={() => setSelectedAll(!selectedAll)} />
+          <RowActions
+            options={[
+              {
+                type: "checkbox",
+                checked: selectedAll,
+                action: () => setSelectedAll(!selectedAll)
+              }
+            ]}
+          />
           {
             columns.map((column, key) => (
               <XStack key={key} flex={1} width={column.width ?? "100%"}>
@@ -131,7 +139,25 @@ function DashBoardDomainTable({ title, data, columns, schema }: { title?: string
           data.map(item => (
             <YStack hoverStyle={{ bg: "$color4" }}>
               <XStack key={item.id} minHeight="$6" flex={1} ai="center" px="$6">
-                <RowActions checked={selectedItems.map(elem => elem.id).includes(item.id)} onPress={() => toggeSelect(item)} />
+                <RowActions
+                  options={[
+                    {
+                      type: "checkbox",
+                      checked: selectedItems.map(elem => elem.id).includes(item.id),
+                      action: () => toggeSelect(item)
+                    },
+                    {
+                      type:"options",
+                      options: [
+                        {
+                          label: "delete",
+                          labelColor: "$red10",
+                          action: () => console.log('DELETING', item.id)
+                        }
+                      ]
+                    }
+                  ]}
+                />
                 {columns.map(column => (
                   <XStack key={`${item.id}-${column.selector}`} flex={1} width={column.width ?? "100%"}>
                     {
@@ -151,43 +177,56 @@ function DashBoardDomainTable({ title, data, columns, schema }: { title?: string
   )
 }
 
-function RowActions({ onPress, checked }: any) {
+function RowActions({ options }: any) {
   const { tint } = useTint()
-
   return (<XStack w="$6" ai="center" space="$2" mr="$2">
-    <Checkbox checked={checked} size={"$6"} onPress={onPress} bg="$color4">
-      <Checkbox.Indicator theme={tint as any}>
-        <CheckIcon color="$color8" />
-      </Checkbox.Indicator>
-    </Checkbox>
-    <Popover size="$5" allowFlip placement='bottom'>
-      <Popover.Trigger asChild>
-        <XStack w="$2" h="$2" ai="center" theme={tint as any}>
-          <MoreVertical color="$color7" />
-        </XStack>
-      </Popover.Trigger>
-      <Popover.Content
-        borderWidth={1}
-        borderColor="$borderColor"
-        enterStyle={{ y: -10, opacity: 0 }}
-        exitStyle={{ y: -10, opacity: 0 }}
-        elevate
-        animation={[
-          'quick',
-          {
-            opacity: {
-              overshootClamping: true,
-            },
-          },
-        ]}
-      >
-        <Popover.Arrow borderWidth={1} borderColor="$borderColor" />
-        <YStack>
-          <XStack onPress={() => console.log('DELETE: ')} cursor="pointer">
-            <Paragraph color="$red10">delete</Paragraph>
-          </XStack>
-        </YStack>
-      </Popover.Content>
-    </Popover>
+    {
+      options.find(opt => opt.type == 'checkbox') ?
+        <Checkbox checked={options.find(opt => opt.type == 'checkbox')?.checked} size={"$6"} onPress={options.find(opt => opt.type == 'checkbox')?.action} bg="$color4">
+          <Checkbox.Indicator theme={tint as any}>
+            <CheckIcon color="$color8" />
+          </Checkbox.Indicator>
+        </Checkbox>
+        : null
+    }
+    {
+      options.find(opt => opt.type == "options") ?
+
+        <Popover size="$5" allowFlip placement='bottom'>
+          <Popover.Trigger asChild>
+            <XStack w="$2" h="$2" ai="center" theme={tint as any}>
+              <MoreVertical color="$color7" />
+            </XStack>
+          </Popover.Trigger>
+          <Popover.Content
+            borderWidth={1}
+            borderColor="$borderColor"
+            enterStyle={{ y: -10, opacity: 0 }}
+            exitStyle={{ y: -10, opacity: 0 }}
+            elevate
+            animation={[
+              'quick',
+              {
+                opacity: {
+                  overshootClamping: true,
+                },
+              },
+            ]}
+          >
+            <Popover.Arrow borderWidth={1} borderColor="$borderColor" />
+            <YStack>
+              {
+                options.find(opt => opt.type == "options")?.options?.map(opt => (
+                  <XStack onPress={opt.action} cursor="pointer">
+                    <Paragraph color={opt?.labelColor}>{opt.label}</Paragraph>
+                  </XStack>
+                ))
+              }
+
+            </YStack>
+          </Popover.Content>
+        </Popover>
+        : null
+    }
   </XStack>)
 }
