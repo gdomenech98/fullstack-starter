@@ -26,7 +26,8 @@ export async function createAPI(entity, modelInstance: any, schema: any, prefix:
         const { id } = req.params;
         try {
             const data = await db.read(entity, { id });
-            res.json(data)
+            const result = modelInstance.load(data).onRead()
+            res.json(result)
         } catch (e) {
             ErrorResponse(e, res)
         }
@@ -35,8 +36,10 @@ export async function createAPI(entity, modelInstance: any, schema: any, prefix:
     router.post(prefix + entity, async (req: Request, res: Response) => {
         const payload = req.body;
         try {
-            const data = await db.create(entity, payload);
-            res.json(data)
+            const _data = modelInstance.load(payload).create()
+            const data = await db.create(entity, _data);
+            const result = modelInstance.load(data).onCreate()
+            res.json(result)
         } catch (e) {
             ErrorResponse(e, res)
         }
@@ -47,8 +50,10 @@ export async function createAPI(entity, modelInstance: any, schema: any, prefix:
         const { id } = req.params;
         const payload = req.body;
         try {
-            const data = await db.update(entity, {id} ,payload);
-            res.json(data)
+            const _data = modelInstance.load(payload).update()
+            const data = await db.update(entity, {id} ,_data);
+            const result = modelInstance.load(data).onUpdate()
+            res.json(result)
         } catch (e) {
             ErrorResponse(e, res)
         }
@@ -57,8 +62,11 @@ export async function createAPI(entity, modelInstance: any, schema: any, prefix:
     router.delete(prefix + entity + `/:id`, async (req: Request, res: Response) => {
         const { id } = req.params;
         try {
-            const data = await db.delete(entity, {id});
-            res.json(data)
+            const item = await db.read(entity, {id});
+            const _data = modelInstance.load(item).delete()
+            const data = await db.delete(_data, {id});
+            const result = modelInstance.load(data).onDelete()
+            res.json(result)
         } catch (e) {
             ErrorResponse(e, res)
         }

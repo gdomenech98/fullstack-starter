@@ -8,8 +8,8 @@ export const BaseShape = BaseSchema.shape; // Typescript types e.g {id: "string"
 export type BaseType = z.infer<typeof BaseSchema>; // Typescript types e.g {id:string, _delete: boolean}
 
 export class BaseModel<T> {
-    private data: any; // pass BaeSchema
-    private session: any; // pass SessionSchema 
+    protected data: any; // pass BaeSchema
+    protected session: any; // pass SessionSchema 
 
     constructor(data, session?) {
         this.data = data;
@@ -17,7 +17,7 @@ export class BaseModel<T> {
     }
 
     // TODO
-    static __newInstance(data, session) { 
+    static __newInstance(data, session) {
         // This method should be implemented by each model that extend BaseModel
         return new this(data, session)
     }
@@ -25,7 +25,7 @@ export class BaseModel<T> {
     static load(data, session?) {
         return this.__newInstance(data, session)
     }
-    
+
     getData(): any {
         return this.data;
     }
@@ -38,46 +38,51 @@ export class BaseModel<T> {
         return this.getData().id
     }
 
-    validate(): boolean {
-        if (this.getId()) {
-            return true // valid
-        }
-        return false; // not valid
+    validate(): BaseModel<T> {
+        BaseSchema.parse(this.getData())
+        return this
     }
 
     // CRUD METHODS
-    list(): T[] {
-        return this.data;
+    onList(data: any[]) { 
+        // This method should be reimplemented at child class
+        return this.onList(data)
     }
 
-    create(item: T): void {
-        // Validate the item before adding it to the model
-        if (this.validate()) {
-            this.data.push(item);
-            this.saveData();
-        }
+    onRead() {
+        // Apply Transformations
+        return this.getData();
     }
 
-    update(id: number, newItem: T): void {
-        const itemIndex = this.data.findIndex((item: T) => item['id'] === id);
-        if (itemIndex !== -1 && this.validate()) {
-            this.data[itemIndex] = newItem;
-            this.saveData();
-        }
+    create() {
+        this.validate()// Validate the item before adding it to the model
+        // Apply transformations
+        return this.getData();
     }
 
-    delete(id: number): void {
-        const itemIndex = this.data.findIndex((item: T) => item['id'] === id);
-        if (itemIndex !== -1) {
-            this.data.splice(itemIndex, 1);
-            this.saveData();
-        }
+    onCreate() {
+        // Apply transformations
+        return this.getData()
     }
 
+    update(): BaseModel<T> {
+        this.validate();
+        // Apply transformations
+        return this.getData();
+    }
 
+    onUpdate(): BaseModel<T> {
+        // Apply transformations
+        return this.getData()
+    }
 
-    private saveData(): void {
-        // Save data to a source (e.g., a database)
-        // Example: database.update('UPDATE table SET ...');
+    delete(): BaseModel<T> {
+        // Apply transformations
+        return this.getData()
+    }
+
+    onDelete(): BaseModel<T> {
+        // Apply transformations
+        return this.getData()
     }
 }
