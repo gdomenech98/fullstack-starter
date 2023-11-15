@@ -108,7 +108,7 @@ function DashBoardDomainTable({ title, data, columns, schema }: { title?: string
 
   return (
     <YStack>
-      <XStack mb="$6" p="$6">
+      <XStack pt="$6" px="$6">
         <Paragraph fontSize={"$5"}>{title + " ["}</Paragraph>
         <ThemeTint><Paragraph fontSize={"$5"} color={"$color8"}>{data.length}</Paragraph></ThemeTint>
         <Paragraph fontSize={"$5"}>{"]"}</Paragraph>
