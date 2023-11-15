@@ -43,7 +43,7 @@ export async function createAPI(entity, modelInstance: any, schema: any, prefix:
 
     });
     // Update
-    router.post(prefix + entity + `/:id`, async (req: Request, res: Response) => {
+    router.put(prefix + entity + `/:id`, async (req: Request, res: Response) => {
         const { id } = req.params;
         const payload = req.body;
         try {
@@ -54,7 +54,7 @@ export async function createAPI(entity, modelInstance: any, schema: any, prefix:
         }
     });
     // Delete
-    router.get(prefix + entity + `/:id/delete`, async (req: Request, res: Response) => {
+    router.delete(prefix + entity + `/:id`, async (req: Request, res: Response) => {
         const { id } = req.params;
         try {
             const data = await db.delete(entity, {id});

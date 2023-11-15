@@ -31,17 +31,17 @@ export class MongoDB {
         return this.client.db()
     }
 
-    async list(collectionName: string, dbquery: any, showHidden?: boolean) {
+    async list(collectionName: string, dbquery: any, showDeleted?: boolean) {
         const collection = this.getDB().collection(collectionName);
-        if (!showHidden) dbquery = { ...dbquery, hidden: { $exists: false } }
+        if (!showDeleted) dbquery = { ...dbquery, _delete: { $exists: false } }
         const data = await collection.find(dbquery).toArray();
         if (data.length == 0) throw "Not found"
         return data
     }
 
-    async read(collectionName: string, dbquery: any, showHidden?: boolean) {
+    async read(collectionName: string, dbquery: any, showDeleted?: boolean) {
         const collection = this.getDB().collection(collectionName);
-        if (!showHidden) dbquery = { ...dbquery, hidden: { $exists: false } }
+        if (!showDeleted) dbquery = { ...dbquery, _delete: { $exists: false } }
         const data = await collection.findOne(dbquery)
         if (!data) throw "Not found"
         return data
@@ -81,7 +81,7 @@ export class MongoDB {
     async delete(collectionName: string, dbquery: any) { // delete One
         let data = await this.read(collectionName, dbquery)
         if (!data) throw "Not found"
-        data = { ...data, hidden: true }; // Sets to hidden
+        data = { ...data, _delete: true }; // Sets to deleted
         await this.update(collectionName, dbquery, data)
         return data
     }
