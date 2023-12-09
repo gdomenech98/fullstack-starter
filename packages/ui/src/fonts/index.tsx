@@ -3,8 +3,8 @@ import { createMunroFont } from '@tamagui/font-munro'
 import { createSilkscreenFont } from '@tamagui/font-silkscreen'
 import { createInterFont } from '@tamagui/font-inter'
 
-export const cherryBombFont = createCherryBombFont()
-export const munroFont = createMunroFont()
+export const cherryBombFont: any = createCherryBombFont()
+export const munroFont: any = createMunroFont()
 const silkscreenFont = createSilkscreenFont()
 const headingFont = createInterFont({
     size: {
