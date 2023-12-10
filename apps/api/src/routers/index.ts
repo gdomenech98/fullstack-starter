@@ -1,6 +1,7 @@
 import testRouter from "./testRouter";
 import express from 'express';
-import { createAPI, authRouter, MongoDB, UserModel, UserSchema } from "sixedge";
+import { MongoDB, authRouter, UserModel, UserSchema } from "sixedge";
+import { createAPI } from "sixedge/api/generateAPI";
 
 require('dotenv').config({ path: __dirname + '/../../../.env' });
 
